@@ -20,7 +20,6 @@ const	commands =
 	}
 }
 
-
 const	client = new tmi.Client(
 {
 	connection:
