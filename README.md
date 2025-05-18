@@ -7,6 +7,11 @@
 
  Made with JavaScript
 
+### Features
+	* Permabanned site-list
+ 	* Timout for 30 seconds on any link (configurable)
+ 	* Simple commands structure (in commands reponses)
+
 ### Dependencies
 	* tmi.js
 	* node.js
