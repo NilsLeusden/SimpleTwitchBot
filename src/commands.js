@@ -2,6 +2,7 @@
 
 	// try to use twitch API
 	// add more commands
+	const { trySay } = require('./tryTmi.js');
 
 const	regexCommand = new RegExp(/^!([a-zA-Z0-9]+)(?:\W+)?(.*)?/);
 
@@ -35,11 +36,11 @@ async function commandFound(client, match, channel, tags)
 	if (typeof response === 'function')
 	{
 		const result = response(argument);
-		await client.say(channel, result);
+		await trySay(client, channel, result);
 	}
 	else if (typeof response === 'string')
 	{
-		await client.say(channel, response);
+		await trySay(client, channel, response);
 	}
 }
 

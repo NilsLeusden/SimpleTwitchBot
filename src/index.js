@@ -2,6 +2,8 @@
 const	tmi = require('tmi.js');
 const 	parseSpam  = require('./spamFilter.js');
 const	findCommand = require('./commands.js');
+const	{trySay} = require('./tryTmi.js');
+
 
 const	client = new tmi.Client(
 {
@@ -47,6 +49,6 @@ client.on('message', async (channel, tags, message, self) =>
 
 client.on('raided', async (channel, username, viewers) => {
 	console.log(`Raid detected from ${username} with ${viewers} viewers!`);
-	await client.say(channel, `Thanks for the raid ${username}!`);
-	await client.say(channel, `give them a follow at https://twitch.tv/${username} for a cookie!`);
+	await trySay(channel, `Thanks for the raid ${username}!`);
+	await trySay(channel, `give them a follow at https://twitch.tv/${username} for a cookie!`);
 });

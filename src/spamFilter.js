@@ -2,6 +2,8 @@
 
 	// fix regex
 	// figure out why twitch doesnt respond to ban calls
+const	{ tryBan, tryTimeout } = require('./tryTmi.js');
+
 
 function parseDomains(domain) {
 	const [name, tld] = domain.split('.');
@@ -28,48 +30,27 @@ async function parseSpam(client, message, channel, tags)
 		return ;
 	for (const pattern of bannedPatterns)
 	{
-		// console.log(`test: ${pattern}`);
 		if (pattern.test(message))
 		{
 			console.log("Perma ban found!");
-			try
-			{
-				await client.ban(channel, tags.username, 'malicious link');
-			} catch (err)
-			{
-				console.error(err);
-			}
+			tryBan(client, channel, tags.username, 'Sharing malicious links.');
 			return (true);
 		}
-
 	}
 	if (genericLinkPattern.test(message))
 	{
 		if (tags['first-msg'] === '1')
 		{
 			console.log("Perma ban found!");
-			try
-			{
-				await client.ban(channel, tags.username, 'First time message cant be a link');
-			} catch (err)
-			{
-				console.error(err);
-			}
+			tryBan(client, channel, tags.username, 'First time message cant be a link');
 		}
 		else
 		{
-			console.log(`Link found, timing out ${tags.username}!`);
-			try
-			{
-				await client.timeout(channel, tags.username, 30, 'Please dont share links :(');
-			} catch(err)
-			{
-				console.error(err);
-			}
+			console.log(`Link found, timing out ${tags.username}`);
+			tryTimeout(client, channel, tags.username, 30, 'Please dont share links :(');
 		}
 		return (true);
 	}
-	console.log('no links found');
 	return (false);
 };
 
